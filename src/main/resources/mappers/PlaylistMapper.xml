@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.playlist.PlaylistMapper">
+    <insert id="postSong">
+        INSERT INTO playlist
+        SET title=#{title}
+            , singer=#{singer}
+            , writer=#{writer}
+    </insert>
+    <select id="getList">
+        SELECT title, singer, writer, created_at AS createdAt
+        FROM playlist
+    </select>
+    <select id="getPlay">
+        SELECT title, singer, writer
+        FROM playlist
+        WHERE list_id = #{listId}
+    </select>
+    <update id="putSong">
+        UPDATE playlist
+        <set>
+            <if test=" title !=null and title !='' ">
+                title=#{title}
+            </if>
+            <if test=" singer !=null and singer !='' ">
+                ,singer=#{singer}
+            </if>
+            <if test=" writer !=null and writer !='' ">
+                ,writer=#{writer}
+            </if>
+        </set>
+        WHERE list_id= #{listId}
+    </update>
+    <delete id="delSong">
+        DELETE FROM playlist
+        WHERE list_id=#{listId}
+    </delete>
+</mapper>
